@@ -1,9 +1,9 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const databaseCfg = require('./config/database')
-
+const databaseConfig = require('./config/database')
+const APIRoutes = require('./routes')
 class App {
-  constructor() {
+  constructor () {
     this.express = express()
 
     this.database()
@@ -11,21 +11,19 @@ class App {
     this.routes()
   }
 
-  database() {
-    mongoose.connect(databaseCfg.uri, {
+  database () {
+    mongoose.connect(databaseConfig.uri, {
       useCreateIndex: true,
-      useNewUrlParser: true,
+      useNewUrlParser: true
     })
   }
 
-  middlewares() {
+  middlewares () {
     this.express.use(express.json())
   }
 
-  routes() {
-    this.express.use('/', (req, res) => {
-      return res.send('hello')
-    })
+  routes () {
+    this.express.use('/', APIRoutes)
   }
 }
 
